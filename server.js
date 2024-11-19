@@ -9,7 +9,6 @@ dotenv.config();
 const path = require('path');
 
 
-// Corrected async function with proper error handling
 const connectDB = async () => {
     try {
         const mongoURI = process.env.MONGO_URI
@@ -17,11 +16,10 @@ const connectDB = async () => {
         console.log("Connected to MongoDB")
     } catch (error) {
         console.error("Error connecting to MongoDB:", error)
-        process.exit(1) // Exit the process if the DB connection fails
+        process.exit(1) 
     }
 }
 
-// Call the connectDB function to establish the connection
 connectDB()
 
 
@@ -38,21 +36,20 @@ app.post("/admin", (req, res) => {
         const admin = process.env.ADMIN_KEY;
         const { adminKey } = req.body;
 
-        // Check if adminKey matches the stored admin key
+        
         if (adminKey === admin) {
             return res.status(200).send("Admin authenticated successfully");
         } else {
             return res.status(403).send("Forbidden: Invalid admin key");
         }
     } catch (error) {
-        // Handle unexpected errors
         console.error(error);
         return res.status(500).send("Internal Server Error");
     }
 });
 
 
-// Start the server
+
 app.listen(5500, () => {
     console.log("Server running on port 5500")
 })
